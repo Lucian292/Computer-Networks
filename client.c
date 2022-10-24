@@ -10,23 +10,23 @@
 
 int main(int argc, char* argv[]) {
     //crearea fisierului fifo si verificarea daca exista inainte
-    if (mkfifo("myfifo1", 0777) == -1) {
+    if (mkfifo("myfifo1.txt", 0777) == -1) {
         if (errno != EEXIST) {
             printf("Imposibil de creat fisierul fifo1\n");
             return 1;
         }
     }
-    //char * myfifo = "myfifo1"; //pointer catre fisierul fifo
+    //char * myfifo = "myfifo1.txt"; //pointer catre fisierul fifo
     int fd_to_server, fd_from_server;
     char arr1[100], raspunsul[256];
     while (1){
-        fd_to_server = open("myfifo1", O_WRONLY);
+        fd_to_server = open("myfifo1.txt", O_WRONLY);
         if (fd_to_server == -1) {return 2;}
         fgets(arr1, 100, stdin); // citim de la tastatura un cuvant
         write(fd_to_server, arr1, strlen(arr1)+1);
         if (fd_to_server == -1) {return 3;}
         
-        fd_from_server = open ("myfifo2", O_RDONLY);
+        fd_from_server = open ("myfifo2.txt", O_RDONLY);
         if (fd_from_server == -1) {return 4;}
         read(fd_from_server, raspunsul, sizeof(char) * 255);
         
